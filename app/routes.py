@@ -21,3 +21,8 @@ def init_routes(app):
         db.session.commit()
         logger.info(f"Added student {student.name} added with ID {student.id}")
         return jsonify({"student" : student.to_dict()}), 201
+
+    @app.route("/api/v1/students", methods=["GET"])
+    def get_students():
+        students = Student.query.all()
+        return jsonify({"student" : [student.to_dict() for student in students]}), 200
