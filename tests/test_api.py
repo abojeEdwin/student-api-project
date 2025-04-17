@@ -15,6 +15,6 @@ def client():
         yield client
 
 def test_add_student(client):
-    response = client.post("/api/add_student", json={"name" : "Edwin", "age" : 20})
+    response = client.post("/api/v1/students", json={"name" : "Edwin", "age" : 20})
     assert response.status_code == 201
-    assert response.json["name"] == "Edwin"
+    assert response.json["student"]["name"] == "Edwin"

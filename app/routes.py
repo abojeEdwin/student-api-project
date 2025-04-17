@@ -20,4 +20,4 @@ def init_routes(app):
         db.session.add(student)
         db.session.commit()
         logger.info(f"Added student {student.name} added with ID {student.id}")
-        return jsonify({student.to_dict()}), 201
+        return jsonify({"student" : student.to_dict()}), 201

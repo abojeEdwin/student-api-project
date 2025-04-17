@@ -1,4 +1,5 @@
 import logging
+
 from flask import Flask
 from .config import Config
 from .student_models import db
@@ -16,3 +17,4 @@ def create_app():
     from .routes import init_routes
     init_routes(app)
     return app
+
