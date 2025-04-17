@@ -1,9 +1,7 @@
 .PHONY: install run test
 install:
-        .venv/bin/pip install -r requirements.txt
-
+	.venv/bin/pip install -r requirements.txt
 run:
-        flask run
-
+	flask run
 test:
-        .venv/bin/pytest -v
+	.venv/bin/pytest -v

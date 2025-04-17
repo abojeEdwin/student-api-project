@@ -5,6 +5,10 @@ from .student_models import db, Student
 logger = logging.getLogger(__name__)
 
 def init_routes(app):
+    @app.route("/")
+    def home():
+        return "hello world"
+
     @app.route("/api/v1/healthcheck", methods=["GET"])
     def health_check():
         return jsonify({"status": "ok"}),200
