@@ -13,8 +13,7 @@ def client():
         with app.app_context():
             db.create_all()
         yield client
-        db.session.remove()
-        db.drop_all()
+
 def set_up():
     db.drop_all()
 
@@ -32,3 +31,10 @@ def test_get_students(client):
     response = client.get("/api/v1/students")
     assert response.status_code == 200
     assert len(response.json["student"]) == 1
+
+def test_get_student(client):
+    response1 = client.post("/api/v1/students", json={"name": "Edwin", "age": 20})
+    student_id = response1.json["student"]["id"]
+    response = client.get(f"/api/v1/students/{student_id}")
+    assert response.status_code == 200
+    assert response.json["name"] == "Edwin"

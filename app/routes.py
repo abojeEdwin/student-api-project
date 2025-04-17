@@ -26,3 +26,8 @@ def init_routes(app):
     def get_students():
         students = Student.query.all()
         return jsonify({"student" : [student.to_dict() for student in students]}), 200
+
+    @app.route("/api/v1/students/<int:id>", methods=["GET"])
+    def get_student(id):
+        student = Student.query.get_or_404(id)
+        return jsonify(student.to_dict()), 200
