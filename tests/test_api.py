@@ -16,9 +16,11 @@ def client():
 
 def set_up():
     db.drop_all()
+    db.session.delete()
 
 def tear_down():
     db.drop_all()
+    db.session.delete()
 
 def test_add_student(client):
     response = client.post("/api/v1/students", json={"name" : "Edwin", "age" : 20})
@@ -38,3 +40,19 @@ def test_get_student(client):
     response = client.get(f"/api/v1/students/{student_id}")
     assert response.status_code == 200
     assert response.json["name"] == "Edwin"
+    assert response.json["age"] == 20
+
+def test_update_student(client):
+    response1 = client.post("/api/v1/students", json={"name": "Edwin", "age": 20})
+    student_id = response1.json["student"]["id"]
+    response = client.put(f"/api/v1/students/{student_id}", json={"name": "Edwin", "age": 21})
+    assert response.status_code == 200
+    assert response.json["name"] == "Edwin"
+    assert response.json["age"] == 21
+
+
+def test_delete_student(client):
+    response = client.post("/api/v1/students", json={"name": "Mike Tyson", "age": 20})
+    student_id = response.json["student"]["id"]
+    response1 = client.delete(f"/api/v1/students/{student_id}")
+    assert response1.status_code == 204

@@ -31,3 +31,19 @@ def init_routes(app):
     def get_student(id):
         student = Student.query.get_or_404(id)
         return jsonify(student.to_dict()), 200
+
+    @app.route("/api/v1/students/<int:id>", methods=["PUT"])
+    def update_student(id):
+        student = Student.query.get_or_404(id)
+        data = request.get_json()
+        student.name = data["name"]
+        student.age = data["age"]
+        db.session.commit()
+        return jsonify(student.to_dict()), 200
+
+    @app.route("/api/v1/students/<int:id>", methods=["DELETE"])
+    def delete_student(id):
+        student = Student.query.get_or_404(id)
+        db.session.delete(student)
+        db.session.commit()
+        return '', 204
